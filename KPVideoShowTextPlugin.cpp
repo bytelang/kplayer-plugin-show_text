@@ -8,11 +8,7 @@
 
 #include "KPVideoShowTextPlugin.h"
 
-KPVideoShowTextPlugin::KPVideoShowTextPlugin(const std::string &identify_name, PluginParams params) : KPPluginAdapter(std::move(identify_name)) {
-    // 赋值信息
-    filter_type = KP_FILTER_TYPE_VIDEO;
-    filter_name = "video_plugin_show_text";
-
+KPVideoShowTextPlugin::KPVideoShowTextPlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParams params) : KPPluginAdapter(identify_name, filter_name, filter_type) {
     // 赋值described
     std::stringstream filter_desc_stream;
 
@@ -37,7 +33,7 @@ KPVideoShowTextPlugin::KPVideoShowTextPlugin(const std::string &identify_name, P
         y = params["y"];
     }
 
-    filter_desc_stream << "x=" << x << ":y=" << y << ":fontfile=Res/font.ttf:fontsize=" << font_size << ":fontcolor=" << font_color << ":text='" << text << "'";
+    filter_desc_stream << "x=" << x << ":y=" << y << ":fontfile=res/font.ttf:fontsize=" << font_size << ":fontcolor=" << font_color << ":text='" << text << "'";
     filter_desc = filter_desc_stream.str();
 
     // 查找过滤器
@@ -60,5 +56,5 @@ void KPVideoShowTextPlugin::Task() {
 }
 
 KPLAYER_PLUGIN_FUNC(KPVideoShowTextPlugin) {
-        return new KPVideoShowTextPlugin("kplayer", std::move(params));
+    return new KPVideoShowTextPlugin("kplayer", "video_plugin_show_text", KP_FILTER_TYPE_VIDEO, std::move(params));
 }

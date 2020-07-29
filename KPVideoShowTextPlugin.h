@@ -24,7 +24,7 @@ class KPVideoShowTextPlugin : public KPPluginAdapter {
 protected:
     PluginParams params;
 public:
-    explicit KPVideoShowTextPlugin(const std::string &identify_name, PluginParams params);
+    explicit KPVideoShowTextPlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParams params);
     ~KPVideoShowTextPlugin() override;
     void KillTask() override;
     void InitTask() override;
