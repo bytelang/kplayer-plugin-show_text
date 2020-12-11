@@ -21,10 +21,8 @@ extern "C" {
 #include <utility>
 
 class KPVideoShowTextPlugin : public KPPluginAdapter {
-protected:
-    PluginParams params;
 public:
-    explicit KPVideoShowTextPlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParams params);
+    explicit KPVideoShowTextPlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParamsObject plugin_params);
     ~KPVideoShowTextPlugin() override;
     void KillTask() override;
     void InitTask() override;

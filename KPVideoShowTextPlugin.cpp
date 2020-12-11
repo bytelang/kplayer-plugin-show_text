@@ -8,7 +8,7 @@
 
 #include "KPVideoShowTextPlugin.h"
 
-KPVideoShowTextPlugin::KPVideoShowTextPlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParams params) : KPPluginAdapter(identify_name, filter_name, filter_type) {
+KPVideoShowTextPlugin::KPVideoShowTextPlugin(const std::string &identify_name, const std::string &filter_name, const KPFilterType &filter_type, PluginParamsObject plugin_params) : KPPluginAdapter(identify_name, filter_name, filter_type, std::move(plugin_params)) {
     // 赋值described
     std::stringstream filter_desc_stream;
 
@@ -17,20 +17,20 @@ KPVideoShowTextPlugin::KPVideoShowTextPlugin(const std::string &identify_name, c
     std::string text       = "未设置text";
     std::string x          = "0";
     std::string y          = "0";
-    if (params.find("font_size") != params.end()) {
-        font_size = params["font_size"];
+    if (plugin_params_object.params.find("font_size") != plugin_params_object.params.end()) {
+        font_size = plugin_params_object.params["font_size"];
     }
-    if (params.find("font_color") != params.end()) {
-        font_color = params["font_color"];
+    if (plugin_params_object.params.find("font_color") != plugin_params_object.params.end()) {
+        font_color = plugin_params_object.params["font_color"];
     }
-    if (params.find("text") != params.end()) {
-        text = params["text"];
+    if (plugin_params_object.params.find("text") != plugin_params_object.params.end()) {
+        text = plugin_params_object.params["text"];
     }
-    if (params.find("x") != params.end()) {
-        x = params["x"];
+    if (plugin_params_object.params.find("x") != plugin_params_object.params.end()) {
+        x = plugin_params_object.params["x"];
     }
-    if (params.find("y") != params.end()) {
-        y = params["y"];
+    if (plugin_params_object.params.find("y") != plugin_params_object.params.end()) {
+        y = plugin_params_object.params["y"];
     }
 
     filter_desc_stream << "x=" << x << ":y=" << y << ":fontfile=res/font.ttf:fontsize=" << font_size << ":fontcolor=" << font_color << ":text='" << text << "'";
@@ -56,5 +56,5 @@ void KPVideoShowTextPlugin::Task() {
 }
 
 KPLAYER_PLUGIN_FUNC(KPVideoShowTextPlugin) {
-    return new KPVideoShowTextPlugin("kplayer", "video_plugin_show_text", KP_FILTER_TYPE_VIDEO, std::move(params));
+    return new KPVideoShowTextPlugin("kplayer", "video_plugin_show_text", KP_FILTER_TYPE_VIDEO, std::move(plugin_params));
 }
